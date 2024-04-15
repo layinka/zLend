@@ -1,0 +1,58 @@
+<div class="mt-3">
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="profile">
+            <button ngbNavLink>Edit Profile</button>
+            <ng-template ngbNavContent>
+                <app-profile></app-profile>
+
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="apiKey">
+            <button ngbNavLink>Api Key</button>
+            <ng-template ngbNavContent>
+                <app-api-key></app-api-key>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="secretKey">
+            <button ngbNavLink>Secret Key and Test Public Key</button>
+            <ng-template ngbNavContent>
+                <app-secret-key></app-secret-key>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="twofactAuth">
+            <button ngbNavLink>Password and Security</button>
+            <ng-template ngbNavContent>
+                <app-pass-secure></app-pass-secure>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="cryptoMeth">
+            <button ngbNavLink>Payout and Crypto</button>
+            <ng-template ngbNavContent>
+                <app-pay-menthod></app-pay-menthod>
+            </ng-template>
+
+        </li>
+        <li [ngbNavItem]="cryptoMeth">
+            <button ngbNavLink>Groups</button>
+            <ng-template ngbNavContent>
+                <app-groups></app-groups>
+            </ng-template>
+
+        </li>
+        <li [ngbNavItem]="sessions">
+            <button ngbNavLink>Sessions</button>
+            <ng-template ngbNavContent>
+                <app-sessions></app-sessions>
+            </ng-template>
+
+        </li>
+        <li [ngbNavItem]="emails">
+            <button ngbNavLink>Emails</button>
+            <ng-template ngbNavContent>
+                <app-emails></app-emails>
+            </ng-template>
+
+        </li>
+    </ul>
+</div>
+<div [ngbNavOutlet]="nav" class="mt-2 px-3"></div>

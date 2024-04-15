@@ -1,0 +1,97 @@
+<div class="row">
+    <div class="col-md-3 col-sm-12 col-lg-3 mb-2">
+        <div class="card w-70">
+            <div class="text-center">
+                <img class="img-fluid card-img-top" src="../../../favicon.ico" alt="Profile Image" width="300" height="300">
+            </div>
+            <div class="card-body pt-4">
+                <div class="form-group">
+                    <p class="fw-normal h5">Normal Text</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body p-3">
+                <p class="fs-4">Profile</p>
+
+                <form>
+
+                    <!-- NAME -->
+                    <div class="form-group mt-2">
+                        <label for="name" class="small fw-bold">Name</label>
+                        <input type="text" name="name" class="form-control mt-1">
+                    </div>
+
+                    <!-- PROFILE PICTURE -->
+                    <div class="form-group mt-3">
+                        <label for="name" class="small fw-bold">Profile Picture</label>
+                        <input type="file" name="name" class="form-control mt-1">
+                    </div>
+
+                    <!-- IDENTIFICATION DOCUMENT -->
+                    <div class="form-group mt-3">
+                        <label for="name" class="small fw-bold">Identification Document</label>
+                        <input type="file" name="name" class="form-control mt-1">
+                    </div>
+
+                    <!-- GENDER -->
+                    <div class="form-group mt-3">
+                        <label for="name" class="small fw-bold">Gender</label>
+                        <div class="mt-2">
+
+                            <!-- FEMALE CHECKBOX -->
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="female" value="female">
+                                <label class="form-check-label" for="female">Female</label>
+                            </div>
+
+                            <!-- MALE CHECKBOX -->
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="male" type="checkbox" value="male">
+                                <label class="form-check-label" for="male">Male</label>
+                            </div>
+
+                            <!-- NONBINARY CHECKBOX -->
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="nonbinary" type="checkbox" value="nonbinary">
+                                <label class="form-check-label" for="nonbinary">Nonbinary</label>
+                            </div>
+
+                            <!-- PRFER NOT TO SAY CHECKBOX -->
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="notsaying" type="checkbox" value="notsaying">
+                                <label class="form-check-label" for="notsaying">Prefer not to say</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LANGUAGE -->
+                    <div class="form-group mt-3">
+                        <label for="name" class="small fw-bold">Language</label>
+                        <div class="mt-2">
+
+                            <!-- LANGUAGE CHECKBOX -->
+                            <div class="form-check-inline">
+                                <select class="form-select" name="language">
+                                    <option selected>Select Language</option>
+                                    <option value="eng-us">English (United State)</option>
+                                    <option value="eng-uk">English (United Kingdom)</option>
+                                    <option value="frnch">French</option>
+                                    <option value="chse">Chinese</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <button class="btn-outline-primary btn">Save Profile</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

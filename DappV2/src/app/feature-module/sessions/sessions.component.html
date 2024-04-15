@@ -1,0 +1,43 @@
+<div class="card mb-5">
+    <div class="p-4">
+        <p class="h4">Sessions</p>
+        <p class="small text-muted">These are the devices you are currently logged in on. If you don't use a session for more than 30 days, you will be logged out automatically.</p>
+    </div>
+    <div class="card-body " style="background-color: #f8f8f8;">
+
+        <form>
+
+            <!-- APIKEY SEARCHER -->
+            <div class="search-hero">
+                <input style="background-color: #f8f8f8;" class="form-control" type="text" name="search"
+                    autocomplete="off"
+                    placeholder="&#61442;  Search for sessions...">
+            </div>
+        </form>
+
+        <!-- APIKEY LIST -->
+        <table class="table table-borderless mt-2 ">
+            <thead class="">
+                <tr>
+                    <th class="text-muted">SESSION</th>
+                    <th class="text-muted">LAST USED</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let session of sessions">
+                    @if (session.name == '' && session.lastused =='') {
+                    <div class="container bg-transparent">
+                        <p class="text-center mt-5 text-muted small">No sessions found</p>
+                    </div>
+                    }
+                    @else{
+                    <td>{{session.name}}</td>
+                    <td>{{session.lastused}}</td>
+                    }
+
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

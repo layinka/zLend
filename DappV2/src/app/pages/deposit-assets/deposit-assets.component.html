@@ -1,0 +1,139 @@
+
+
+<div class="card bg-primary " >
+    <div class="card-header">
+        <h3>Deposit Assets</h3>
+    </div>
+    <div class="card-body  table-responsive">
+        <span *ngIf="!assets">Loading ...</span>
+
+        <table *ngIf="assets" class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" class="px-4 font-semibold ">
+                  Assets
+                </th>
+                <th scope="col" class="px-4 py-2 font-semibold ">
+                  Wallet Balance
+                </th>
+                <th scope="col" class="px-4 py-2 font-semibold ">
+                  APY
+                </th>
+                <th scope="col" class="px-4 py-2 font-semibold ">
+                  Can be Collateral
+                </th>
+                <th scope="col" class="px-4 py-2 font-semibold"></th>
+              </tr>
+            </thead>
+
+            <tbody>
+                <tr  *ngFor="let token of  assets">
+                    <th scope="row" class="border-t-0 px-4 border align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                        <div class="flex items-center">
+                          <img [src]="'/assets/token-logos/' + token.name.toLowerCase() + '.png'" class="img-fluid" alt="coin image" style="width:80px"  />
+                          <div class="ml-2 ">{{token.name}}</div>
+                        </div>
+                    </th>
+                    <td class="border-t-0 px-4 border align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        <div class="text-base font-medium ">{{token.walletBalance.amount | number: '1.2-4'}}</div>
+                        <div class="text-sm ">(${{token.walletBalance.inDollars| number: '1.2-2'}})</div>
+                        
+                    </td>
+                    <td class="border-t-0 px-4 border  align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        <div class="text-base">N/A</div>
+                    </td>
+                    <td class="border-t-0 px-4 border  align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        <div class="text-green-700 text-lg font-large"> &#10004; </div>
+                    </td>
+                    <td class="border-t-0 px-4 border align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        <button (click)="openDepositModal(depositModal, token)" class="btn btn-success m-2 p-2">Deposit</button>
+
+                        <button (click)="openAssetDetailsModal(assetDetailsModal, token)" class="btn btn-info m-2 p-2">Details</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ng-template #depositModal let-modal>
+	<div class="modal-header">
+    	<h4 class="modal-title" id="modal-basic-title">Deposit <span class="ml-2 text-gray-800">{{selectedToken?.name??''}}</span></h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('dismiss')"></button>
+	</div>
+	<div class="modal-body">
+		<form *ngIf="depositFormGroup"  [formGroup]="depositFormGroup" class="whitelist-form needs-validation"  novalidate >
+      <div  class="mb-3" >
+        <label class="form-label" for="amount">Amount to Deposit</label>
+        <input class="form-control"  type="number"  placeholder="" formControlName="amount" aria-describedby="dHelp"  [ngClass]="{ 'is-invalid': depositFormGroup.get('amount')!.touched && depositFormGroup.get('amount')!.invalid, 'is-valid': depositFormGroup.get('amount')!.touched && depositFormGroup.get('amount')!.valid }"/>
+
+        
+          
+        <div id="dHelp"  class="mt-2 form-text">
+          You can deposit any amount. <br/>
+                    
+          <div class="alert alert-info">You will be prompted to approve your token for this contract</div>
+        </div>
+
+        <div class="error-message mt-2" *ngIf="depositFormGroup.get('amount')!.invalid && depositFormGroup.get('amount')!.touched">
+          <div *ngFor="let error of  objectKeys(depositFormGroup.get('amount')?.errors)">                                        
+          {{validationMessages.amount[error]}}
+          </div>
+        </div>
+
+      </div>
+      
+      
+    </form>
+	</div>
+	<div class="modal-footer">
+		<!-- <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button> -->
+        <button (click)="modal.dismiss('dismiss')" class="btn btn-outline-dark">
+            Close
+        </button>
+        <button class="btn btn-primary" *ngIf="depositFormGroup" [disabled]="depositFormGroup.invalid " (click)="depositCoin()">Submit</button>
+	</div>
+</ng-template>
+
+
+
+
+
+
+<ng-template #assetDetailsModal let-modal>
+	<div class="modal-header">
+    	<h4 class="modal-title" id="modal-basic-title">Details <span class="ml-2 text-gray-800">{{selectedToken?.name??''}}</span></h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('dismiss')"></button>
+	</div>
+	<div class="modal-body">
+		<asset-details [token]="selectedToken"></asset-details>
+	</div>
+	<div class="modal-footer">
+		<!-- <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button> -->
+        <button (click)="modal.dismiss('dismiss')" class="btn btn-outline-dark">
+            Close
+        </button>
+        
+	</div>
+</ng-template>

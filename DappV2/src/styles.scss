@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+@import "bootstrap";
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+/* Import Bootstrsp Icons */
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+
+
+body {
+    margin: 0;
+
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+.error-message{
+    color: red;
+}
+body {
+    background-color: white;
+}
+
+
+.text-white-200{
+    color: rgb(240, 243, 246) !important;
+}

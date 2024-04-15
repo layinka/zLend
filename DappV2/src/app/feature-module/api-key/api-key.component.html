@@ -1,0 +1,77 @@
+<div class="card mb-5">
+    <div class="p-4">
+        <p class="h4">API keys</p>
+        <p class="small text-muted">API keys are used to programmatically access features using the API.</p>
+    </div>
+    <div class="card-body " style="background-color: #f8f8f8;">
+
+        <form>
+
+            <!-- APIKEY SEARCHER -->
+            <div class="search-hero">
+                <input style="background-color: #f8f8f8;" class="form-control" type="text" name="search"
+                    [(ngModel)]="searchText" autocomplete="off"
+                    placeholder="&#61442;  Start searching for apikey or name or scopes or restrictions">
+            </div>
+        </form>
+
+        <!-- APIKEY LIST -->
+        <table class="table table-borderless mt-2 ">
+            <thead class="">
+                <tr>
+                    <th class="text-muted">API KEY</th>
+                    <th class="text-muted">SCOPES</th>
+                    <th class="text-muted">RESTRICTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let apikey of apikeys">
+                    @if (apikey.name == '' && apikey.scopes == '' && apikey.restrictions =='') {
+                    <div class="container bg-transparent">
+                        <h1 class="text-center mt-5">No Api Key Found</h1>
+                    </div>
+                    }
+                    @else{
+                    <td>{{apikey.name}}</td>
+                    <td>{{apikey.scopes}}</td>
+                    <td>{{apikey.restrictions}}</td>
+                    }
+
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+
+    <!-- APIKEY GENERATOR -->
+    <div class="card-body">
+        <p class="h4">Add API key</p>
+        <p class="small text-muted">You can create another API key with specific permissions. You can add IP address
+            range and referrer restrictions after creating the API key. </p>
+        <form [formGroup]="userApikey" (ngSubmit)="addApikey()">
+
+            <!-- NAME -->
+            <div class="form-group mt-2">
+                <label for="name" class="small fw-bold">Name</label>
+                <input type="text" name="name" class="form-control mt-1" formControlName="name" >
+            </div>
+
+            <!-- SCOPES -->
+            <div class="form-group mt-2">
+                <label for="scopes" class="small fw-bold">Scopes</label>
+                <textarea name="scopes" formControlName="scopes" class="form-control" cols="30" rows="5"></textarea>
+            </div>
+
+            <!-- RESTRICTIONS -->
+            <div class="form-group mt-2">
+                <label for="restrictions" class="small fw-bold">Restrictions</label>
+                <input type="text" name="restrictions" formControlName="restrictions" class="form-control mt-1">
+            </div>
+
+            <div class="mt-3">
+                <button class="btn-outline-primary btn" type="submit">Add Api Key</button>
+            </div>
+        </form>
+    </div>
+</div>
