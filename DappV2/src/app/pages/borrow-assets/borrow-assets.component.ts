@@ -142,9 +142,13 @@ export class BorrowAssetsComponent implements OnInit {
   }
 
 
+  selectedTokenMaxBorrowal=1000000
+
   openBorrowModal(content: TemplateRef<any>,token){
     
     this.selectedToken = token;
+
+    this.selectedTokenMaxBorrowal= this.getAvailableStats(token).actualAvailable
 
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
 			(result) => {
@@ -193,7 +197,7 @@ export class BorrowAssetsComponent implements OnInit {
       this.spinner.hide();
       
       
-      this.toastService.error('Oops!','Your Borrowing Failed');
+      this.toastService.error('Oops!','Your Borrowing Failed. Check you have enough assets deposited to borrow');
     }
   };
 

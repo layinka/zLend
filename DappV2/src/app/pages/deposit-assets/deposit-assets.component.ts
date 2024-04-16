@@ -160,8 +160,14 @@ export class DepositAssetsComponent implements OnInit {
     const zToken = this.web3Service.getERC20ContractWithSigner(contractList[this.currentChainId].zLendTokenAddress!); 
 
     try {
+
+      const allowance = await this.web3Service.getERC20Allowance(token.tokenAddress, contractList[this.currentChainId].zLend as `0x${string}`,this.web3Service.account as `0x${string}`);
+      console.log('current allowance:', allowance, ', value ', value.toString())
+      if(allowance< value.toBigInt()){
+        console.log('needs approval')
+        await this.web3Service.approveERC20Contract(token.tokenAddress, contractList[this.currentChainId].zLend!,this.web3Service.account!, value.toBigInt());
+      }
       
-      await this.web3Service.approveERC20Contract(token.tokenAddress, contractList[this.currentChainId].zLend!,this.web3Service.account!, value);
 
       const tx = await this.zLendContract!.lend(token.tokenAddress, value);
       const depositResult = await tx.wait();

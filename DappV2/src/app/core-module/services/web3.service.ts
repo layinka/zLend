@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 // import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 // import { Web3Modal } from '@web3modal/html'
-import {   createConfig, fetchBalance, getBalance, getChainId, injected, reconnect, simulateContract, watchAccount, watchChainId, watchConnections, writeContract } from '@wagmi/core';
+import {   createConfig, fetchBalance, getBalance, getChainId, injected, reconnect, simulateContract, 
+  watchAccount, watchChainId, watchConnections, writeContract } from '@wagmi/core';
 import { arbitrum, Chain, fantom, base, baseSepolia, fantomTestnet, goerli, mainnet, 
   sepolia, polygon, bsc, bscTestnet, celo, celoAlfajores, 
   hardhat, metisGoerli, etherlinkTestnet, shardeumSphinx } from '@wagmi/core/chains';
@@ -33,7 +34,7 @@ const metadata = {
 
 //@ts-ignore
 export const wagmiConfig = createConfig({
-  chains: [mainnet, sepolia, baseSepolia, base, etherlinkTestnet, shardeumSphinx],
+  chains: [hardhat,  mainnet, sepolia, baseSepolia, base, etherlinkTestnet, shardeumSphinx],
   connectors: [
     walletConnect({ projectId: projectId, metadata, showQrModal: false }),
     injected({ shimDisconnect: true }),
@@ -43,6 +44,7 @@ export const wagmiConfig = createConfig({
     })
   ],
   transports: {
+    [hardhat.id]: http(),
     [mainnet.id]: http(),
     [sepolia.id]: http(),
     [base.id]: http(),
@@ -58,7 +60,8 @@ export const chains: Record<number, Chain> = {
   8453: base,
   11155111: sepolia,
   128123: etherlinkTestnet,
-  8082: shardeumSphinx
+  8082: shardeumSphinx,
+  31337: hardhat
 
 
 } 
@@ -172,7 +175,7 @@ export class Web3Service {
         enableOnramp: true, // Optional - false as default
   
       })
-    }, 150);
+    }, 300);
     
 
     
@@ -259,18 +262,26 @@ export class Web3Service {
   async approveERC20Contract(tokenAddress: string, contractToApprove: string, 
     account: string, amount, chainId? :any){
 
+    
     //@ts-ignore
-    const simu = await simulateContract(wagmiConfig, {
+    // const simu = await simulateContract(wagmiConfig, {
+    //   address: tokenAddress as `0x${string}`,
+    //   abi: erc20Abi,      
+    //   account: account as `0x${string}`,
+    //   functionName: 'approve',
+    //   args: [ contractToApprove as `0x${string}`, amount],
+    //   chainId
+    // })
+ 
+    //@ts-ignore
+    return await writeContract(wagmiConfig,{
       address: tokenAddress as `0x${string}`,
       abi: erc20Abi,      
       account: account as `0x${string}`,
       functionName: 'approve',
       args: [ contractToApprove as `0x${string}`, amount],
       chainId
-    })
-
-    //@ts-ignore
-    return await writeContract(wagmiConfig,simu);
+    });
 
     
   }

@@ -24,7 +24,7 @@ async function main() {
   // const networkName = hre.network.name;
   let chainId = hre.network.config.chainId!;
 	console.log('chainId:  ', chainId );
-  // chainId = 31337;
+  if(!chainId) chainId = 31337;
   
   let zLendArtifact = await ethers.getContractFactory("zLend2");
   let zLendTokenArtifact = await ethers.getContractFactory("zLendToken");
@@ -98,8 +98,8 @@ async function main() {
     // console.log('Adding token ',  token.name, ' with address ', tAddr, ' and feed address ',  token.feed_address)
     // const tx = await zLend.updateTokenPrice(tAddr, ethers.utils.parseUnits(token.toUsd.toFixed(2), 0));
     
-    //const tx = await zLend.updateTokenPrice(tAddr, ethers.utils.parseUnits(token.toUsd.toString(), token.decimal), token.decimal.toFixed(0) );
-    const tx = await zLend.updateTokenPrice(tAddr, 0, token.decimal.toFixed(0) );
+    const tx = await zLend.updateTokenPrice(tAddr, ethers.utils.parseUnits(token.toUsd.toString(), token.decimal), token.decimal.toFixed(0) );
+    //const tx = await zLend.updateTokenPrice(tAddr, 0, token.decimal.toFixed(0) );
     await tx.wait();
 
     const tx2 = await zLend.addTokensForLending(token.name, tAddr, token.LTV, token.borrow_stable_rate, token.interest_rate);

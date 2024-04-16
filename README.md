@@ -1,5 +1,5 @@
 # ZLend 
-## DeFi Lending DApp
+## DeFi Peer to Peer Lending DApp
 DeFi Lending platform which lets you lend, borrow crypto assets and helps you earn some passive income as interest on your deposits.
 
 Depositors are rewarded with zLend tokens for depositing into the Lending Pool. Depositors will also be able to share from the interest made on the platforms from loans.
@@ -7,9 +7,8 @@ Depositors are rewarded with zLend tokens for depositing into the Lending Pool. 
 ## Networks supported
 zLend aims to be multichain. Current networks supported are
 
-- Polygon testnet
-- Klaytyn Testnet
-- XDC(XinFin) Apothem Testnet
+- Etherlink testnet
+- Shardeum Testnet
 
 
 # Features
@@ -24,13 +23,12 @@ zLend aims to be multichain. Current networks supported are
 
 # Tools
 1. **Open Zeppelin**
-2. **Chainlink**: The contract uses the AggregatorV3Interface of chainlink to fetch real time price feeds.
+2. **Chainlink/Redstone**
 3. **Hardhat**
-4. **Ethers Js** 
+4. **Ethers Js/WAGMI/VIEM** 
 5. **Angular**
 6. **Bootstrap**
-7. **Wallet Connect/ Coinbase wallet/ Web3Modal/Unstoppable Domains**
-8. **web3.js**
+7. **Wallet Connect/ Coinbase wallet/ Web3Modal**
 
 
 

@@ -2,7 +2,7 @@
 
 <div class="card bg-primary " >
     <div class="card-header">
-        <h3>Deposit Assets</h3>
+        <h3>Assets in Wallet</h3>
     </div>
     <div class="card-body  table-responsive">
         <span *ngIf="!assets">Loading ...</span>
@@ -16,9 +16,9 @@
                 <th scope="col" class="px-4 py-2 font-semibold ">
                   Wallet Balance
                 </th>
-                <th scope="col" class="px-4 py-2 font-semibold ">
+                <!-- <th scope="col" class="px-4 py-2 font-semibold ">
                   APY
-                </th>
+                </th> -->
                 <th scope="col" class="px-4 py-2 font-semibold ">
                   Can be Collateral
                 </th>
@@ -39,9 +39,9 @@
                         <div class="text-sm ">(${{token.walletBalance.inDollars| number: '1.2-2'}})</div>
                         
                     </td>
-                    <td class="border-t-0 px-4 border  align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    <!-- <td class="border-t-0 px-4 border  align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         <div class="text-base">N/A</div>
-                    </td>
+                    </td> -->
                     <td class="border-t-0 px-4 border  align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         <div class="text-green-700 text-lg font-large"> &#10004; </div>
                     </td>

@@ -12,6 +12,8 @@ interface IExtendedERC20 is IERC20 {
     function symbol() external view returns (string memory);
 } 
 
+error NotEnoughBalance();
+
 contract zLend2 is Ownable, ReentrancyGuard, MainDemoConsumerBase  {
     using LendingHelper for address;
     using SafeERC20 for IERC20;
@@ -157,12 +159,14 @@ contract zLend2 is Ownable, ReentrancyGuard, MainDemoConsumerBase  {
     }
 
     function lend(address tokenAddress, uint256 amount) external payable nonReentrant {
-        require(tokenIsAllowed(tokenAddress, tokensForLending));
-        require(amount > 0);
+        require(tokenIsAllowed(tokenAddress, tokensForLending), 'TokenNotAllowed');
+        require(amount > 0, 'AmountLT0');
 
         IERC20 token = IERC20(tokenAddress);
 
-        require(token.balanceOf(msg.sender) >= amount);
+        if(token.balanceOf(msg.sender) < amount){
+            revert NotEnoughBalance();
+        }
 
         token.safeTransferFrom(msg.sender, address(this), amount);
 
@@ -183,15 +187,15 @@ contract zLend2 is Ownable, ReentrancyGuard, MainDemoConsumerBase  {
     }
 
     function borrow(uint256 amount, address tokenAddress) external nonReentrant {
-        require(tokenIsAllowed(tokenAddress, tokensForBorrowing));
-        require(amount > 0);
+        require(tokenIsAllowed(tokenAddress, tokensForBorrowing), 'TokenNotAllowed');
+        require(amount > 0, 'AmountLT0');
 
         uint256 totalAmountAvailableForBorrowInDollars = getUserTotalAmountAvailableForBorrowInDollars(msg.sender);
         uint256 amountInDollars = getAmountInDollars(amount, tokenAddress);
 
         
 
-        require(amountInDollars <= totalAmountAvailableForBorrowInDollars);
+        require(amountInDollars <= totalAmountAvailableForBorrowInDollars, 'NotEnoughUSD');
 
         IERC20 token = IERC20(tokenAddress);
 
@@ -224,18 +228,18 @@ contract zLend2 is Ownable, ReentrancyGuard, MainDemoConsumerBase  {
     }
 
     function payDebt(address tokenAddress, uint256 amount) external nonReentrant {
-        require(amount > 0);
+        require(amount > 0, 'AmountLT0');
 
         int256 index = msg.sender.indexOf(borrowers);
 
         
-        require(index >= 0);
+        require(index >= 0, 'IXError');
 
         uint256 tokenBorrowed = tokensBorrowedAmount[tokenAddress][msg.sender];
 
         
 
-        require(tokenBorrowed > 0);
+        require(tokenBorrowed > 0, 'NoBorrowBalance');
         IERC20 token = IERC20(tokenAddress);
 
         token.safeTransferFrom(msg.sender,address(this),amount + interest(tokenAddress, tokenBorrowed));
@@ -258,9 +262,9 @@ contract zLend2 is Ownable, ReentrancyGuard, MainDemoConsumerBase  {
     }
 
     function withdraw(address tokenAddress, uint256 amount) external nonReentrant {
-        require(amount > 0);
+        require(amount > 0, 'AmountLT0');
 
-        require(msg.sender.indexOf(lenders) >= 0);
+        require(msg.sender.indexOf(lenders) >= 0, 'IXError');
 
         IERC20 token = IERC20(tokenAddress);
 
@@ -270,11 +274,11 @@ contract zLend2 is Ownable, ReentrancyGuard, MainDemoConsumerBase  {
         uint totalTokenSuppliedInContract = getTotalTokenSupplied(tokenAddress);
         uint totalTokenBorrowedInContract = getTotalTokenBorrowed(tokenAddress);
 
-        require(amount <= (totalTokenSuppliedInContract - totalTokenBorrowedInContract));
+        require(amount <= (totalTokenSuppliedInContract - totalTokenBorrowedInContract), 'AmountDpstdNotEnough');
 
         
 
-        require(tokenToWithdrawInDollars <= availableToWithdraw);
+        require(tokenToWithdrawInDollars <= availableToWithdraw, 'availableToWithdrawNotEnough');
 
         uint256 zLTokenToRemove = getAmountInDollars(amount, tokenAddress);
         uint256 zLTokenBalance = zLToken.balanceOf(msg.sender);
