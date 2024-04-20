@@ -17,9 +17,13 @@ const contractList: ContractListArray =  {
     },
     
     31337: {// Hardhat test
+        // chainId: 31337,
+        // zLend: '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707', 
+        // zLendTokenAddress: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',  
+        
         chainId: 31337,
-        zLend: '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707', 
-        zLendTokenAddress: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',      
+        "zLend":"0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f",
+        "zLendTokenAddress":"0x3Aa5ebB10DC797CAC828524e59A333d0A371443c" 
         
     }, 
     137: {//Polygon mainnet

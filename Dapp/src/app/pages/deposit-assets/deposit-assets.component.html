@@ -62,18 +62,23 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+<ng-template #tokenApprovalModal let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Approve your zLend Token</h4>
+		
+	</div>
+	<div class="modal-body">
+		<div class="d-flex m-1 p-1 justify-content-center align-items-center">
+      <div>
+        <h3>Your Deposit Was Successful!</h3>
+        <h4 class="mt-1">Now, Approve your zLend Token to allow us give you rewards for Depositing and using zLend</h4>
+      </div>
+    </div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="modal.close('approve')">Approve</button>
+	</div>
+</ng-template>
 
 
 
@@ -112,7 +117,7 @@
         <button (click)="modal.dismiss('dismiss')" class="btn btn-outline-dark">
             Close
         </button>
-        <button class="btn btn-primary" *ngIf="depositFormGroup" [disabled]="depositFormGroup.invalid " (click)="depositCoin()">Submit</button>
+        <button class="btn btn-primary" *ngIf="depositFormGroup" [disabled]="depositFormGroup.invalid " (click)="depositCoin(tokenApprovalModal)">Submit</button>
 	</div>
 </ng-template>
 

@@ -14,8 +14,9 @@ npx hardhat test --network localhost
 npx hardhat node
 npx hardhat coverage
 npx hardhat run scripts/deploy.ts --network localhost
-npx hardhat run scripts/deploy-zlend.ts --network evmos_t
-npx hardhat run scripts/deploy-zlend2.ts --network mumbai
+npx hardhat run scripts/deploy-zlend2.ts --network localhost
+npx hardhat run scripts/deploy-zlend2.ts --network etherlink_t
+npx hardhat run scripts/deploy-zlend2.ts --network shardeum_t
 
 GAS_REPORT=true npx hardhat test
 npx hardhat node

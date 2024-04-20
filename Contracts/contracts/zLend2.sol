@@ -45,8 +45,7 @@ contract zLend2 is Ownable, ReentrancyGuard, MainDemoConsumerBase  {
         address sender,
         int256 index,
         uint256 tokenAmountBorrowed,
-        uint256 totalTokenAmountToCollectFromUser,
-        address[] borrowers
+        uint256 totalTokenAmountToCollectFromUser
     );
     event Borrow(
         address sender,
@@ -54,10 +53,9 @@ contract zLend2 is Ownable, ReentrancyGuard, MainDemoConsumerBase  {
         uint256 totalAmountAvailableForBorrowInDollars,
         bool userPresent,
         int256 userIndex,
-        address[] borrowers,
         uint256 currentUserTokenBorrowedAmount
     );
-    event Supply(address sender,address[] lenders,uint256 currentUserTokenLentAmount);
+    event Supply(address sender,uint256 currentUserTokenLentAmount);
     
     
 
@@ -183,7 +181,7 @@ contract zLend2 is Ownable, ReentrancyGuard, MainDemoConsumerBase  {
          // Send some tokens to the user equivalent to the token amount lent.
         zLToken.safeTransfer(msg.sender, getAmountInDollars(amount, tokenAddress));
 
-        emit Supply(msg.sender,lenders,tokensLentAmount[tokenAddress][msg.sender]);
+        emit Supply(msg.sender,tokensLentAmount[tokenAddress][msg.sender]);
     }
 
     function borrow(uint256 amount, address tokenAddress) external nonReentrant {
@@ -221,8 +219,7 @@ contract zLend2 is Ownable, ReentrancyGuard, MainDemoConsumerBase  {
             amountInDollars,
             totalAmountAvailableForBorrowInDollars,
             userPresent,
-            userIndex,
-            borrowers,
+            userIndex,            
             tokensBorrowedAmount[tokenAddress][msg.sender]
         );
     }
@@ -256,8 +253,8 @@ contract zLend2 is Ownable, ReentrancyGuard, MainDemoConsumerBase  {
             msg.sender,
             index,
             tokenBorrowed,
-            amount + interest(tokenAddress, tokenBorrowed),
-            borrowers
+            amount + interest(tokenAddress, tokenBorrowed)
+            
         );
     }
 

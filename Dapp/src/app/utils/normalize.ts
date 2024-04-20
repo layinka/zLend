@@ -30,7 +30,7 @@ export const normalizeToken = async (provider, zContract, currentToken, account)
     try{
       return ethers.utils.formatUnits(amount, 18);
     }catch{
-      console.error('error fromweing ', amount)
+      console.error('error from wei ', amount)
       return '0';
     }
   };
@@ -50,8 +50,6 @@ export const normalizeToken = async (provider, zContract, currentToken, account)
   }
 
   const symbol = await tokenInst.symbol();
-  console.log('symbol: ', symbol)
-
   const contract = zContract;
   // const contract = WrapperBuilder.wrap(zContract).usingDataService(
   //   {

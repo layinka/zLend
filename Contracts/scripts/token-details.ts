@@ -1,5 +1,18 @@
 import { ethers } from "hardhat";
-export const tokenDetails = {
+export const tokenDetails: {
+    [index: number]: {
+        name: string;
+        address: string;
+        feed_address: string;
+        LTV: any;
+        interest_rate: any;
+        borrow_stable_rate: any;
+        wrapped?: boolean;
+        holder_to_impersonate? : string;
+        toUsd?: number;
+        decimal?: number;
+    }[];
+} = {
     137: [
         {
             name: "DAI",
@@ -56,6 +69,18 @@ export const tokenDetails = {
     ],
     31337: [
         {
+            name: "wETH",
+            address: "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+            feed_address: "0x4746DeC9e833A82EC7C2C1356372CcF2cfcD2F3D",
+            LTV: ethers.utils.parseUnits ("0.8"), // Loan-to-Value (LTV) Ratio, Lower is better
+            interest_rate: ethers.utils.parseUnits ("0.015"), // interest paid to depositors
+            borrow_stable_rate: ethers.utils.parseUnits ("0.025"), // interest paid by borrowers
+            holder_to_impersonate: '0xdfd74e3752c187c4ba899756238c76cbeefa954b',
+            toUsd: 2670,
+            decimal: 18,
+            wrapped: true
+        },
+        {
             name: "DAI",
             address: "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
             feed_address: "0x4746DeC9e833A82EC7C2C1356372CcF2cfcD2F3D",
@@ -74,17 +99,6 @@ export const tokenDetails = {
             interest_rate: ethers.utils.parseUnits ("0.015"), // interest paid to depositors
             borrow_stable_rate: ethers.utils.parseUnits ("0.025"), // interest paid by borrowers
             holder_to_impersonate: '0xb97a32d95a31a504c3db28ddd574f21c700edbee',
-            toUsd: 0.99,
-            decimal: 18
-        },
-        {
-            name: "WETH",
-            address: "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-            feed_address: "0xF9680D99D6C9589e2a93a78A04A279e509205945", //"0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-            LTV: ethers.utils.parseUnits ("0.8"), 
-            interest_rate: ethers.utils.parseUnits ("0.015"), // interest paid to depositors
-            borrow_stable_rate: ethers.utils.parseUnits ("0.025"), // interest paid by borrowers
-            holder_to_impersonate: '0x2093b4281990a568c9d588b8bce3bfd7a1557ebd',
             toUsd: 0.99,
             decimal: 18
         }
@@ -153,6 +167,51 @@ export const tokenDetails = {
             toUsd: 0.992,
             decimal: 18
         },
+        {
+            name: "USDC",
+            address: "0x0b3a3769109f17af9d3b2fa52832b50d600a9b1a",
+            feed_address: "0xf49f81b3d2F2a79b706621FA2D5934136352140c",
+            LTV: ethers.utils.parseUnits ("0.85"), // Loan-to-Value (LTV) Ratio, Lower is better
+            interest_rate: ethers.utils.parseUnits ("0.017"), // interest paid to depositors
+            borrow_stable_rate: ethers.utils.parseUnits ("0.03"), // interest paid by borrowers
+            toUsd: 0.910,
+            decimal: 6
+        },
+        {
+            name: "USDT",
+            address: "0x0b3a3769109f17af9d3b2fa52832b50d600a9b1a",
+            feed_address: "0xf49f81b3d2F2a79b706621FA2D5934136352140c",
+            LTV: ethers.utils.parseUnits ("0.8"), // Loan-to-Value (LTV) Ratio, Lower is better
+            interest_rate: ethers.utils.parseUnits ("0.011"), // interest paid to depositors
+            borrow_stable_rate: ethers.utils.parseUnits ("0.027"), // interest paid by borrowers
+            toUsd: 0.99,
+            decimal: 18
+        }
+
+    ],
+
+    8082: [ //Shardeum
+        {
+            name: "wSHM",
+            address: "0xe99500ab4a413164da49af83b9824749059b46ce",
+            feed_address: "0x76Aa17dCda9E8529149E76e9ffaE4aD1C4AD701B",
+            LTV: ethers.utils.parseUnits ("0.6"), // Loan-to-Value (LTV) Ratio, Lower is better
+            interest_rate: ethers.utils.parseUnits ("0.019"), // interest paid to depositors
+            borrow_stable_rate: ethers.utils.parseUnits ("0.0215"), // interest paid by borrowers
+            toUsd: 0.095580 ,
+            decimal: 18,
+            wrapped: true
+        },
+        // {
+        //     name: "Dai",
+        //     address: "0x0b3a3769109f17af9d3b2fa52832b50d600a9b1a",
+        //     feed_address: "0xf49f81b3d2F2a79b706621FA2D5934136352140c",
+        //     LTV: ethers.utils.parseUnits ("0.8"), // Loan-to-Value (LTV) Ratio, Lower is better
+        //     interest_rate: ethers.utils.parseUnits ("0.010"), // interest paid to depositors
+        //     borrow_stable_rate: ethers.utils.parseUnits ("0.02"), // interest paid by borrowers
+        //     toUsd: 0.992,
+        //     decimal: 18
+        // },
         {
             name: "USDC",
             address: "0x0b3a3769109f17af9d3b2fa52832b50d600a9b1a",

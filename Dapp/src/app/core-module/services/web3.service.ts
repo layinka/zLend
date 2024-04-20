@@ -242,16 +242,20 @@ export class Web3Service {
  
 
 
-  async getERC20Allowance(tokenAddress: `0x${string}`, contractToApprove: `0x${string}`, account: `0x${string}`,
+  async getERC20Allowance(tokenAddress: string|`0x${string}`, contractToApprove: string|`0x${string}`, account?: string|`0x${string}`,
    chainId? :any) {
+
+    if(!account){
+      account=this.account;
+    }
     
     
     //@ts-ignore
     const allowance = await readContract(wagmiConfig, {
-      address: tokenAddress,
+      address: tokenAddress as `0x${string}`,
       abi: erc20Abi,      
       functionName: 'allowance',
-      args: [account, contractToApprove],
+      args: [account as `0x${string}`, contractToApprove as `0x${string}`],
       chainId
     })
     

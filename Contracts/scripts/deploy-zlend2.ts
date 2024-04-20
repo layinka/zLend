@@ -29,6 +29,7 @@ async function main() {
   let zLendArtifact = await ethers.getContractFactory("zLend2");
   let zLendTokenArtifact = await ethers.getContractFactory("zLendToken");
   let tokenArtifact = await ethers.getContractFactory("Token");
+  let wethArtifact = await ethers.getContractFactory("WETH9");
   const MockV3AggregatorArtifact = await ethers.getContractFactory('MockV3Aggregator')
   
   
@@ -51,9 +52,24 @@ async function main() {
   for (let index = 0; index < tokenDetails[chainId].length; index++) {
     //@ts-ignore
     const e = tokenDetails[chainId][index]
-    const t = await tokenArtifact.deploy(e.name, e.name);
-    await t.deployed();
-    console.log('Token Deployed at  ', t.address, ', ', e.name );
+    let t;
+    if(e.wrapped){
+      t = await wethArtifact.deploy(e.name, e.name);
+      await t.deployed();
+
+      //deposit in wrapped token contract 
+      if(chainId==31337){
+        t.deposit({value: ethers.utils.parseEther('2')})
+      }
+        
+      
+    }else{
+      t = await tokenArtifact.deploy(e.name, e.name);
+      await t.deployed();
+    }
+    //const t = await tokenArtifact.deploy(e.name, e.name);
+    
+    console.log(`${e.wrapped?'Wrapped Token':'Token'} Deployed at  `, t.address, ', ', e.name );
     tokens.push(t.address)
   }
 
@@ -91,26 +107,45 @@ async function main() {
 
   //@ts-ignore
   for(let index = 0; index < tokenDetails[chainId].length; index++){
-    //@ts-ignore
-    const token = tokenDetails[chainId!][index]
-    // const tAddr = token.address;
-    const tAddr = tokens[index];
-    // console.log('Adding token ',  token.name, ' with address ', tAddr, ' and feed address ',  token.feed_address)
-    // const tx = await zLend.updateTokenPrice(tAddr, ethers.utils.parseUnits(token.toUsd.toFixed(2), 0));
-    
-    const tx = await zLend.updateTokenPrice(tAddr, ethers.utils.parseUnits(token.toUsd.toString(), token.decimal), token.decimal.toFixed(0) );
-    //const tx = await zLend.updateTokenPrice(tAddr, 0, token.decimal.toFixed(0) );
-    await tx.wait();
-
-    const tx2 = await zLend.addTokensForLending(token.name, tAddr, token.LTV, token.borrow_stable_rate, token.interest_rate);
-    await tx2.wait();
-
-    const tx3 = await zLend.addTokensForBorrowing(token.name, tAddr, token.LTV, token.borrow_stable_rate, token.interest_rate);
-    await tx3.wait();
+    const token = tokenDetails[chainId!][index];
+    const tokenAddress = tokens[index];
+    await setupTokenOnZLend(token, tokenAddress);
 
 
   }
+
+  const zLendTokenDetails={
+    name: 'ZLD',
+    
+    LTV: ethers.utils.parseUnits ("0.55"), // Loan-to-Value (LTV) Ratio, Lower is better
+    interest_rate: ethers.utils.parseUnits ("0.011"), // interest paid to depositors
+    borrow_stable_rate: ethers.utils.parseUnits ("0.015"), // interest paid by borrowers
+    toUsd: 0.01,
+    decimal: 18
+}
+  await setupTokenOnZLend(zLendTokenDetails, zLendToken.address)
+
+  console.log(`Outputted Contracts for Chain ${chainId}: `, JSON.stringify({
+    zLend: zLend.address, 
+    zLendTokenAddress: zLendToken.address,
+  }, null, 1))
   
+
+  async function setupTokenOnZLend(token: any, tokenAddress: string) {
+    // const tAddr = token.address;
+    
+    // console.log('Adding token ',  token.name, ' with address ', tAddr, ' and feed address ',  token.feed_address)
+    // const tx = await zLend.updateTokenPrice(tAddr, ethers.utils.parseUnits(token.toUsd.toFixed(2), 0));
+    const tx = await zLend.updateTokenPrice(tokenAddress, ethers.utils.parseUnits((token.toUsd ?? 0).toString(), token.decimal), token.decimal?.toFixed(0));
+    //const tx = await zLend.updateTokenPrice(tAddr, 0, token.decimal.toFixed(0) );
+    await tx.wait();
+
+    const tx2 = await zLend.addTokensForLending(token.name, tokenAddress, token.LTV, token.borrow_stable_rate, token.interest_rate);
+    await tx2.wait();
+
+    const tx3 = await zLend.addTokensForBorrowing(token.name, tokenAddress, token.LTV, token.borrow_stable_rate, token.interest_rate);
+    await tx3.wait();
+  }
 }
 
 
@@ -131,7 +166,7 @@ async function getNewTokenAddress (chainId: any, symbol: any){
 }
 
 
-async function getTokenAddress (chainId, symbol){
+async function getTokenAddress (chainId: any, symbol: any){
   // if(chainId==31337){ //local
   //   let tokenArtifact = await ethers.getContractFactory("Token");  
   //   const token = await tokenArtifact.deploy(symbol, symbol);
@@ -142,13 +177,13 @@ async function getTokenAddress (chainId, symbol){
   const coin = tokenDetails[chainId].find(f=>f.name==symbol);
   if(coin){
     try {
-      impersonateAndTransferAsset(coin.holder_to_impersonate,'0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266', coin.address, 1000 ); // DAI
+      impersonateAndTransferAsset(coin.holder_to_impersonate??'','0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266', coin.address, 1000 ); // DAI
     } catch (error) {
       console.error(error);
     }
 
     try {
-      impersonateAndTransferAsset(coin.holder_to_impersonate,'0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199', coin.address, 1000 );
+      impersonateAndTransferAsset(coin.holder_to_impersonate??'','0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199', coin.address, 1000 );
     } catch (error) {
       console.error(error);
     }

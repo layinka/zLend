@@ -45,6 +45,19 @@ const config: HardhatUserConfig = {
 				}
 	      },
 	      {
+	      	version: "0.8.4",
+				settings: {
+					viaIR : true,
+					optimizer: {
+						enabled: true,
+						runs: 200,
+						details: {
+						  yul: true
+						}
+					}
+				}
+	      },
+	      {
 	      	version: "0.8.17",
 				settings: {
 					viaIR : true,
@@ -189,8 +202,8 @@ const config: HardhatUserConfig = {
 			chainId: 128123,
 		},
 
-		shardeum_t: {
-			url: 'https://eth.bd.evmos.dev:8545',
+		shardeum_t: {// sphinx
+			url: "https://sphinx.shardeum.org/",
 			accounts:
 				process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY, process.env.PRIVATE_KEY_2!] : [],
 			chainId: 8082,

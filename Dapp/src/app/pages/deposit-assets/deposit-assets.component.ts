@@ -149,7 +149,7 @@ export class DepositAssetsComponent implements OnInit {
 
 
   
-  async depositCoin () {
+  async depositCoin (tokenApprovalModal: TemplateRef<any>) {
 
     this.spinner.show();
     const token = this.selectedToken;
@@ -172,15 +172,45 @@ export class DepositAssetsComponent implements OnInit {
       const tx = await this.zLendContract!.lend(token.tokenAddress, value);
       const depositResult = await tx.wait();
 
-      const zTokenBalance = await zToken.balanceOf(this.web3Service.account);
-
-      await(await zToken.approve(contractList[this.currentChainId].zLend!, zTokenBalance)).wait();
+      
 
       this.toastService.show('Success!','Your Deposit has been sent succesfully!')
+      const zTokenBalance = await zToken.balanceOf(this.web3Service.account);
+      const zTokenAllowance = await this.web3Service.getERC20Allowance(contractList[this.currentChainId].zLendTokenAddress!, contractList[this.currentChainId].zLend!);
+      
+      let restartImmediately =true
+      // const bb22= ethers.utils.parseEther('2').mul('5').toBigInt() >0
+      if(zTokenBalance.toBigInt() >0 && zTokenAllowance< zTokenBalance.toBigInt()){
+        restartImmediately=false;
+        this.activeModal.close();
+        this.modalService.open(tokenApprovalModal, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+          async (result) => {
+            this.spinner.show();
+            // this.closeResult = `Closed with: ${result}`;
+            
+            await(await zToken.approve(contractList[this.currentChainId].zLend!, zTokenBalance.mul('5'))).wait();
+            this.spinner.hide();
+            // console.log('closed successfully: ', result)
+            this.toastService.show('Success!','Your zLend Approved succesfully!')
+
+            window.location.reload();
+          },
+          (reason) => {
+            // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    
+            // console.log('Dismissed successfully: ', reason)
+          },
+        );
+      }
+
+
       
       
       this.spinner.hide();
-      window.location.reload(); 
+      if(restartImmediately){
+        window.location.reload(); 
+      }
+      
     } catch (err) {
       console.error('Error depositing: ',err);
       this.spinner.hide();
