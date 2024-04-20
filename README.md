@@ -5,7 +5,7 @@ DeFi Lending platform which lets you lend, borrow crypto assets and helps you ea
 Depositors are rewarded with zLend tokens for depositing into the Lending Pool. Depositors will also be able to share from the interest made on the platforms from loans.
 
 ### Screenshot
-![zlendhome](https://github.com/layinka/zLend/assets/629572/685ce6ce-ac1b-4174-bc37-f95e230e700e)
+![Home](https://github.com/layinka/zLend/assets/629572/685ce6ce-ac1b-4174-bc37-f95e230e700e)
 
 
 ### Demo Video
@@ -48,8 +48,5 @@ ng serve
 ```
 
 
- ![zlenddeposit](https://github.com/layinka/zLend/assets/629572/12ae0a8e-fd9c-444a-8292-f81785d44e1f)
-
-
 ## Deposits
-![Deposit](./Screens/zlenddeposit.png)
+![Deposit](https://github.com/layinka/zLend/assets/629572/12ae0a8e-fd9c-444a-8292-f81785d44e1f)
