@@ -4,11 +4,13 @@ DeFi Lending platform which lets you lend, borrow crypto assets and helps you ea
 
 Depositors are rewarded with zLend tokens for depositing into the Lending Pool. Depositors will also be able to share from the interest made on the platforms from loans.
 
+![zLend](./Screens/zlendhome.png?raw=true "Title")
+
 ## Networks supported
 zLend aims to be multichain. Current networks supported are
 
 - Etherlink testnet
-- Shardeum Testnet
+- Shardeum Sphinx Testnet
 
 
 # Features
@@ -26,8 +28,8 @@ zLend aims to be multichain. Current networks supported are
 2. **Chainlink/Redstone**
 3. **Hardhat**
 4. **Ethers Js/WAGMI/VIEM** 
-5. **Angular**
-6. **Bootstrap**
+5. **Angular 17**
+6. **Bootstrap 5**
 7. **Wallet Connect/ Coinbase wallet/ Web3Modal**
 
 
@@ -41,3 +43,5 @@ ng serve
 ```
  
 
+## Deposits
+![Deposit](./Screens/zlenddeposit.png?raw=true "Title")
