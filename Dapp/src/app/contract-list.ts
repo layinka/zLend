@@ -57,8 +57,8 @@ const contractList: ContractListArray =  {
 
     128123: { // etherlink
         chainId: 128123,
-        zLend: '0x6D096DA092FDF203c2886d88aD773A237822fD82', 
-        zLendTokenAddress: '0x9ED133F814534B89c530909b9EfBAf226e6C9A4f', 
+        "zLend": "0x3FCa62e61909455186BeaB7C9647bC66472e3bEe",
+        "zLendTokenAddress": "0xE7B1D4a5264d5984d1f06F559aA0B712222275CC" 
     },
 
     8082: { //shardeum

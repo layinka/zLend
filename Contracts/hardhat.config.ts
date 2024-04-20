@@ -47,26 +47,26 @@ const config: HardhatUserConfig = {
 	      {
 	      	version: "0.8.4",
 				settings: {
-					viaIR : true,
+					// viaIR : true,
 					optimizer: {
 						enabled: true,
 						runs: 200,
-						details: {
-						  yul: true
-						}
+						// details: {
+						//   yul: true
+						// }
 					}
 				}
 	      },
 	      {
 	      	version: "0.8.17",
 				settings: {
-					viaIR : true,
+					// viaIR : true,
 					optimizer: {
 						enabled: true,
 						runs: 200,
-						details: {
-						  yul: true
-						}
+						// details: {
+						//   yul: true
+						// }
 					}
 				}
 	      }

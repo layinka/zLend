@@ -30,9 +30,9 @@ async function main() {
   let zLendTokenArtifact = await ethers.getContractFactory("zLendToken");
   let tokenArtifact = await ethers.getContractFactory("Token");
   let wethArtifact = await ethers.getContractFactory("WETH9");
-  const MockV3AggregatorArtifact = await ethers.getContractFactory('MockV3Aggregator')
+  // const MockV3AggregatorArtifact = await ethers.getContractFactory('MockV3Aggregator')
   
-  
+  const [owner] = await ethers.getSigners();
 
   // const mockV3Aggregator = await (await MockV3AggregatorArtifact.deploy()).deployed();
   
@@ -53,20 +53,35 @@ async function main() {
     //@ts-ignore
     const e = tokenDetails[chainId][index]
     let t;
-    if(e.wrapped){
-      t = await wethArtifact.deploy(e.name, e.name);
-      await t.deployed();
 
-      //deposit in wrapped token contract 
-      if(chainId==31337){
-        t.deposit({value: ethers.utils.parseEther('2')})
-      }
+    if(e.useAddressInList){
+      if(e.wrapped){
+        t = wethArtifact.attach(e.address).connect(owner);          
+        //deposit in wrapped token contract 
+        if(chainId==31337){
+          t.deposit({value: ethers.utils.parseEther('2')})
+        }         
         
-      
+      }else{
+        t = tokenArtifact.attach(e.address).connect(owner)
+      }
     }else{
-      t = await tokenArtifact.deploy(e.name, e.name);
-      await t.deployed();
+      if(e.wrapped){
+        t = await wethArtifact.deploy(e.name, e.name);
+        await t.deployed();  
+        //deposit in wrapped token contract 
+        if(chainId==31337){
+          t.deposit({value: ethers.utils.parseEther('2')})
+        }
+          
+        
+      }else{
+        t = await tokenArtifact.deploy(e.name, e.name);
+        await t.deployed();
+      }
     }
+
+    
     //const t = await tokenArtifact.deploy(e.name, e.name);
     
     console.log(`${e.wrapped?'Wrapped Token':'Token'} Deployed at  `, t.address, ', ', e.name );
@@ -74,7 +89,7 @@ async function main() {
   }
 
 
-  const [owner] = await ethers.getSigners();
+  
   
   
   

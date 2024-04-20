@@ -34,7 +34,7 @@ const metadata = {
 
 //@ts-ignore
 export const wagmiConfig = createConfig({
-  chains: [hardhat,  mainnet, sepolia, baseSepolia, base, etherlinkTestnet, shardeumSphinx],
+  chains: [hardhat,  /*mainnet, sepolia, baseSepolia, base,*/ etherlinkTestnet, shardeumSphinx],
   connectors: [
     walletConnect({ projectId: projectId, metadata, showQrModal: false }),
     injected({ shimDisconnect: true }),

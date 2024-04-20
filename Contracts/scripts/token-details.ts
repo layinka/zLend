@@ -11,6 +11,7 @@ export const tokenDetails: {
         holder_to_impersonate? : string;
         toUsd?: number;
         decimal?: number;
+        useAddressInList?: boolean;
     }[];
 } = {
     137: [
@@ -237,34 +238,38 @@ export const tokenDetails: {
 
     128123: [
         {
-            name: "XTZ",
-            address: "0x0b3a3769109f17af9d3b2fa52832b50d600a9b1a",
+            name: "wXTZ",
+            address: "0x9DbbE6c9E569AF9A78EcA2bd478830B9a8C117dB",
             feed_address: "0xf49f81b3d2F2a79b706621FA2D5934136352140c",
-            LTV: ethers.utils.parseUnits ("0.85"), // Loan-to-Value (LTV) Ratio, Lower is better
+            LTV: ethers.utils.parseUnits ("0.75"), // Loan-to-Value (LTV) Ratio, Lower is better
             interest_rate: ethers.utils.parseUnits ("0.017"), // interest paid to depositors
             borrow_stable_rate: ethers.utils.parseUnits ("0.03"), // interest paid by borrowers
-            toUsd: 0.910,
-            decimal: 6
+            toUsd: 0.9977,
+            decimal: 6,
+            wrapped:true,
+            useAddressInList:true
         },
         {
             name: "USDC",
-            address: "0x0b3a3769109f17af9d3b2fa52832b50d600a9b1a",
+            address: "0x91F2BEDC51b10fEFFc17eA6CCc0DA985b5F25a3B",
             feed_address: "0xf49f81b3d2F2a79b706621FA2D5934136352140c",
             LTV: ethers.utils.parseUnits ("0.85"), // Loan-to-Value (LTV) Ratio, Lower is better
             interest_rate: ethers.utils.parseUnits ("0.017"), // interest paid to depositors
             borrow_stable_rate: ethers.utils.parseUnits ("0.03"), // interest paid by borrowers
-            toUsd: 0.9910,
-            decimal: 6
+            toUsd: 0.99910,
+            decimal: 6,
+            useAddressInList:true
         },
         {
             name: "USDT",
-            address: "0x0b3a3769109f17af9d3b2fa52832b50d600a9b1a",
+            address: "0x043C8d950F59d49B072eAacDACc1Cd1635936981",
             feed_address: "0xf49f81b3d2F2a79b706621FA2D5934136352140c",
             LTV: ethers.utils.parseUnits ("0.8"), // Loan-to-Value (LTV) Ratio, Lower is better
             interest_rate: ethers.utils.parseUnits ("0.011"), // interest paid to depositors
             borrow_stable_rate: ethers.utils.parseUnits ("0.027"), // interest paid by borrowers
-            toUsd: 0.9932,
-            decimal: 18
+            toUsd: 0.99932,
+            decimal: 18,
+            useAddressInList:true
         },
         
     ]
