@@ -4,7 +4,11 @@ DeFi Lending platform which lets you lend, borrow crypto assets and helps you ea
 
 Depositors are rewarded with zLend tokens for depositing into the Lending Pool. Depositors will also be able to share from the interest made on the platforms from loans.
 
-![zLend](./Screens/zlendhome.png?raw=true "Title")
+### Screenshot
+![zLend](./Screens/zlendhome.png)
+
+### Demo Video
+[Youtube Demo ](https://youtu.be/Uh21wv3zVeQ)
 
 ## Networks supported
 zLend aims to be multichain. Current networks supported are
@@ -44,4 +48,4 @@ ng serve
  
 
 ## Deposits
-![Deposit](./Screens/zlenddeposit.png?raw=true "Title")
+![Deposit](./Screens/zlenddeposit.png)
