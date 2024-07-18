@@ -2,8 +2,9 @@
 
 
 <div class="card bg-primary " >
-    <div class="card-header">
+    <div class="card-header text-white">
         <h3>Your Deposits</h3>
+        <h6 class="px-1 my-1 text-white-muted">This deposits acts as collateral for any loans you take, you also earn interest in zLend for every loan you take</h6>
         Balance : ${{(deposits?.balance ?? "0") | number: '1.2-2'}}
     </div>
     <div class="card-body  table-responsive">

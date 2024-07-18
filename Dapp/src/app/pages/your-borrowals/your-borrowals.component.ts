@@ -12,13 +12,14 @@ import { ToastsComponent } from '../../core-module/toasts/toasts.component';
 import { HeaderComponent } from '../../feature-module/header/header.component';
 import { SidebarComponent } from '../../feature-module/sidebar/sidebar.component';
 import contractList from '../../contract-list';
-import { Web3Service } from '../../core-module/services/web3.service';
+import { wagmiConfig, Web3Service } from '../../core-module/services/web3.service';
 import { ZLend, ZLend2, ZLend2__factory, ZLend__factory } from '../../typechain-types';
 import { toDp } from '../../utils/numbers';
 import { ZlendService } from '../../core-module/services/zlend.service';
 import { AppToastService } from '../../core-module/services/app-toast.service';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AssetDetailsComponent } from '../asset-details/asset-details.component';
+import { waitForTransactionReceipt } from '@wagmi/core';
 
 @Component({
   standalone: true,
@@ -186,8 +187,11 @@ export class YourBorrowalsComponent implements OnInit {
     
     try {
       
-      await this.web3Service.approveERC20Contract(token.tokenAddress, contractList[this.currentChainId].zLend!, this.web3Service.account!, amountToPayBackInWei);
-
+      let txApprvHash = await this.web3Service.approveERC20Contract(token.tokenAddress, contractList[this.currentChainId].zLend!, this.web3Service.account!, amountToPayBackInWei);
+      await waitForTransactionReceipt(wagmiConfig, {
+        hash: txApprvHash,
+        confirmations:1
+      })
       const tx = await this.zLendContract!.payDebt(token.tokenAddress, ethers.utils.parseEther(value.toString()));
       const repayResult = await tx.wait();
 

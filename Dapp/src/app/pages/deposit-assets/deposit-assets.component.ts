@@ -10,7 +10,7 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import contractList from '../../contract-list';
 import { AppToastService } from '../../core-module/services/app-toast.service';
-import { Web3Service } from '../../core-module/services/web3.service';
+import { wagmiConfig, Web3Service } from '../../core-module/services/web3.service';
 import { ZlendService } from '../../core-module/services/zlend.service';
 import { ToastsComponent } from '../../core-module/toasts/toasts.component';
 import { HeaderComponent } from '../../feature-module/header/header.component';
@@ -18,6 +18,7 @@ import { SidebarComponent } from '../../feature-module/sidebar/sidebar.component
 import { ZLend, ZLend__factory } from '../../typechain-types';
 import { toDp } from '../../utils/numbers';
 import { AssetDetailsComponent } from '../asset-details/asset-details.component';
+import { waitForTransactionReceipt } from '@wagmi/core';
 
 
 
@@ -165,7 +166,11 @@ export class DepositAssetsComponent implements OnInit {
       console.log('current allowance:', allowance, ', value ', value.toString())
       if(allowance< value.toBigInt()){
         console.log('needs approval')
-        await this.web3Service.approveERC20Contract(token.tokenAddress, contractList[this.currentChainId].zLend!,this.web3Service.account!, value.toBigInt());
+        let txApprovHash = await this.web3Service.approveERC20Contract(token.tokenAddress, contractList[this.currentChainId].zLend!,this.web3Service.account!, value.toBigInt());
+        await waitForTransactionReceipt(wagmiConfig, {
+          hash: txApprovHash,
+          confirmations:1
+        })
       }
       
 
@@ -219,6 +224,19 @@ export class DepositAssetsComponent implements OnInit {
       this.toastService.error('Oops!','Your Deposit Failed');
     }
   };
+
+  test(tokenApprovalModal: any){
+    this.modalService.open(tokenApprovalModal, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      async (result) => {
+        
+      },
+      (reason) => {
+        // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+
+        // console.log('Dismissed successfully: ', reason)
+      },
+    );
+  }
 
 
   todp(amount, dp){

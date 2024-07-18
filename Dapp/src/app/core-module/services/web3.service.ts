@@ -22,6 +22,7 @@ import { createWeb3Modal } from '@web3modal/wagmi';
 import { ethers } from 'ethers';
 import { getEthersProvider } from '../../utils/wagmi-ethers-adapter';
 import { getEthersSigner } from '../../utils/wagmi-ethers-adapter-signer';
+import { dChainTestnet } from './extra-chains';
 
 const projectId = environment.walletConnectProjectId;
 
@@ -34,7 +35,7 @@ const metadata = {
 
 //@ts-ignore
 export const wagmiConfig = createConfig({
-  chains: [hardhat,  /*mainnet, sepolia, baseSepolia, base,*/ etherlinkTestnet, shardeumSphinx],
+  chains: [hardhat,  /*mainnet, sepolia, baseSepolia, base,*/ dChainTestnet],
   connectors: [
     walletConnect({ projectId: projectId, metadata, showQrModal: false }),
     injected({ shimDisconnect: true }),
@@ -51,6 +52,7 @@ export const wagmiConfig = createConfig({
     [baseSepolia.id]: http(),
     [etherlinkTestnet.id]: http(),
     [shardeumSphinx.id]: http(),
+    [dChainTestnet.id]: http()
   },
 })
 
@@ -61,9 +63,8 @@ export const chains: Record<number, Chain> = {
   11155111: sepolia,
   128123: etherlinkTestnet,
   8082: shardeumSphinx,
-  31337: hardhat
-
-
+  31337: hardhat,
+  2713017997578000: dChainTestnet
 } 
 
 @Injectable({

@@ -1,8 +1,9 @@
 
 
 <div class="card bg-primary " >
-    <div class="card-header">
+    <div class="card-header text-white">
         <h3>Assets in Wallet</h3>
+        <h6 class="px-1 my-1 text-white-muted">You can deposit any of these assets as collateral for any loans you want to take, you also earn interest in zLend for every loan you take</h6>
     </div>
     <div class="card-body  table-responsive">
         <span *ngIf="!assets">Loading ...</span>
@@ -70,13 +71,13 @@
 	<div class="modal-body">
 		<div class="d-flex m-1 p-1 justify-content-center align-items-center">
       <div>
-        <h3>Your Deposit Was Successful!</h3>
-        <h4 class="mt-1">Now, Approve your zLend Token to allow us give you rewards for Depositing and using zLend</h4>
+        <h5>Your Deposit Was Successful!</h5>
+        <p class="mt-2">Now, Approve your zLend Token to allow us give you rewards for Depositing and using zLend</p>
       </div>
     </div>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-dark" (click)="modal.close('approve')">Approve</button>
+		<button type="button" class="btn btn-outline-primary" (click)="modal.close('approve')">Approve</button>
 	</div>
 </ng-template>
 

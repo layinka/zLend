@@ -65,6 +65,12 @@ const contractList: ContractListArray =  {
         chainId: 8082,
         zLend: '0x5749660ac9B78078Ec251dc08570B1BCDe028c02', 
         zLendTokenAddress: '0x6400809865E8aff1EfE04DFDD948DFb0619331c2', 
+    },
+
+    2713017997578000: { //dChain testnet
+        chainId: 2713017997578000,
+        zLend: "0xE47050824F0Ec836a3A0EA0bfcdBfbF4743bEe77",
+        zLendTokenAddress: "0x03333b101F653D5ad13BDd9f524b760e0cCe9f8b"
     }
     
 };

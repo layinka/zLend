@@ -1,5 +1,5 @@
 import { ApplicationConfig, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';
 
 import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -14,7 +14,9 @@ import { BorrowAssetsComponent } from './pages/borrow-assets/borrow-assets.compo
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes), 
+    provideRouter(routes, 
+      withInMemoryScrolling({scrollPositionRestoration: "top", anchorScrolling: "enabled"}),
+    ), 
     provideHttpClient(), 
     provideAnimationsAsync(),
     // provideHttpClient(withInterceptors([AuthInterceptorService])),

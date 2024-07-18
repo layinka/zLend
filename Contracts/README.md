@@ -1,11 +1,10 @@
 # ZLend Contracts
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
 
 Try running some of the following tasks:
 
 ```shell
-npx hardhat accounts --network mumbai
+npx hardhat accounts --network dchain_t
 npx hardhat compile
 npx hardhat help
 npx hardhat test
@@ -16,7 +15,7 @@ npx hardhat coverage
 npx hardhat run scripts/deploy.ts --network localhost
 npx hardhat run scripts/deploy-zlend2.ts --network localhost
 npx hardhat run scripts/deploy-zlend2.ts --network etherlink_t
-npx hardhat run scripts/deploy-zlend2.ts --network shardeum_t
+npx hardhat run scripts/deploy-zlend2.ts --network dchain_t
 
 GAS_REPORT=true npx hardhat test
 npx hardhat node

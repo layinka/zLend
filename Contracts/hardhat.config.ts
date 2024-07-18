@@ -208,6 +208,12 @@ const config: HardhatUserConfig = {
 				process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY, process.env.PRIVATE_KEY_2!] : [],
 			chainId: 8082,
 		},
+		"dchain_t":{
+			url: "https://dchaintestnet-2713017997578000-1.jsonrpc.testnet.sagarpc.io",
+			accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY, process.env.PRIVATE_KEY_2!] : [],
+			
+			chainId: 2713017997578000
+		}
     },
 	namedAccounts: {
 		deployer: 0,
